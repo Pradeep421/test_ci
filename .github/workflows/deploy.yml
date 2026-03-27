@@ -1,4 +1,4 @@
-name: Deploy Glue Scripts
+name: Deploy Glue + Terraform
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v3
 
     - name: Configure AWS
@@ -20,6 +20,17 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
         aws-region: us-east-1
 
-    - name: Upload scripts to S3
+    - name: Upload Scripts to S3
       run: |
         aws s3 cp scripts/ s3://my-glue-project-bucket-pradeep/scripts/ --recursive
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform Init
+      run: terraform init
+      working-directory: terraform
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      working-directory: terraform
