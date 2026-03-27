@@ -22,4 +22,4 @@ jobs:
 
     - name: Upload scripts to S3
       run: |
-        aws s3 cp scripts/ s3://my-glue-project-bucket/scripts/ --recursive
+        aws s3 cp scripts/ s3://my-glue-project-bucket-pradeep/scripts/ --recursive
